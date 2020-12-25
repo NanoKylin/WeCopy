@@ -20,7 +20,12 @@
         
         body {
             /*color: white*/
-            background-image: url('../image/12.jpg');
+            background: url("../image/2.jpg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -30,30 +35,8 @@
     <script type="text/javascript" src="../js/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <nav>
-        <div class="nav-wrapper teal">
-            <ul id="nav-mobile-left" class="left hide-on-med-and-down">
-                <li><a><i class="material-icons">more_vert</i></a></li>
-                <li><a><i class="material-icons">search</i></a></li>
-                <li><a><i class="material-icons">view_module</i></a></li>
-                <li><a><i class="material-icons">refresh</i></a></li>
-            </ul>
-            <ul id="nav-mobile-right" class="right hide-on-med-and-down">
-                <li><a class="waves-effect waves-light btn">登陆</a></li>
-            </ul>
+        <div class="nav-wrapper blue">
+            <a href="#" class="brand-logo center">WeCopy</a>
         </div>
     </nav>
-    <div class="row">
-        <div class="col s12 m6">
-            <div class="card">
-                <div class="card-image">
-                    <img src="../image/1.jpg" alt="">
-                    <span class="card-title">Note</span>
-                    <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                </div>
-                <div class="card-content">
-                    <p>Test Card</p>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
