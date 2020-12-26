@@ -13,5 +13,11 @@
     "author": "Hanbings",
     "devDependencies": {
         "electron": "^11.1.0"
+    },
+    "build": {
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true
+        }
     }
 }
