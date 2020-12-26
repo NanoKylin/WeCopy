@@ -1,0 +1,17 @@
+{
+    "name": "wecopy",
+    "version": "1.0.0",
+    "description": "A Cloud Copy",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "repository": "https://github.com/hanbings/WeCopy",
+    "keywords": [
+        "Electron"
+    ],
+    "author": "Hanbings",
+    "devDependencies": {
+        "electron": "^11.1.0"
+    }
+}
