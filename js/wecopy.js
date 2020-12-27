@@ -1,6 +1,7 @@
 var websocket = null;
 var server = null;
 var username = null;
+var id = 0;
 
 function setSomething() {
     server = document.getElementById("server").value;
@@ -40,7 +41,7 @@ function getContext() {
                 if (e.data == "GCSS01{\"context\":\"LOGIN SUCCESSFUL\"}EE") {
                     websocket.send("GCSC02{\"username\":" + username + ",\"context\":\"null text\"}EE"); // 客户端与服务器端通信
                 } else {
-                    alert(e.data);
+                    websocketTextExecuter(e.data);
                 }
             }
         }
@@ -56,4 +57,14 @@ function setUsernameFromLocalStorage() {
 
 function checkCloudCopyThread() {
     websocket.send("GCSC02{\"username\":" + username + ",\"context\":\"null text\"}EE");
+}
+
+function websocketTextExecuter(message) {
+    addCard(1, "blue", "WeCopy", message);
+}
+
+function addCard(id, color, title, text) {
+    var html = document.createElement("div");
+    html.innerHTML = '<div class=\"valign-wrapper\"' + 'id=' + id + '><div class=\"row\"><div class=\"col s12 m12\"><div class=\"card ' + color + '\"><div class=\"card-content white-text\"><span class=\"card-title">' + title + '</span><p>' + text + '</p></div><div class=\"card-action right-align\"><a href=\"#\">复制</a></div></div></div></div></div>'
+    document.body.appendChild(html);
 }
