@@ -60,7 +60,8 @@ function checkCloudCopyThread() {
 }
 
 function websocketTextExecuter(message) {
-    addCard(1, "blue", "WeCopy", message);
+    var str = message.slice(6, -2);
+    addCard(1, "blue", "WeCopy", str);
 }
 
 function addCard(id, color, title, text) {
