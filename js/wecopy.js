@@ -39,7 +39,7 @@ function getContext() {
             websocket.send("GCSC01{\"username\":" + username + ",\"password\":\"null text\"}EE"); // 客户端与服务器端通信
             websocket.onmessage = e => {
                 if (e.data == "GCSS01{\"context\":\"LOGIN SUCCESSFUL\"}EE") {
-                    websocket.send("GCSC02{\"username\":" + username + ",\"context\":\"null text\"}EE"); // 客户端与服务器端通信
+                    websocket.send("GCSC03{\"username\":" + username + ",\"context\":\"Hello World\"}EE");
                 } else {
                     websocketTextExecuter(e.data);
                 }
@@ -50,22 +50,45 @@ function getContext() {
     }
 }
 
+/**
+ * 从存储器内获取服务器地址和用户名
+ */
 function setUsernameFromLocalStorage() {
     this.username = localStorage.getItem("username");
     this.server = localStorage.getItem("server");
 }
 
-function checkCloudCopyThread() {
-    websocket.send("GCSC02{\"username\":" + username + ",\"context\":\"null text\"}EE");
-}
-
+/**
+ * 裁剪收到的文字
+ */
 function websocketTextExecuter(message) {
-    var str = message.slice(6, -2);
-    addCard(1, "blue", "WeCopy", str);
+    if (message.slice(0, 6) == "GCSS02") {
+        var str = message.slice(6, -2);
+        var text = message.slice(message.indexOf("context") + 9, message.indexOf("picture") - 2);
+        id = id + 1;
+        addCard(id, "blue", "WeCopy", text);
+    }
 }
 
+/**
+ * 添加一块卡片
+ */
 function addCard(id, color, title, text) {
     var html = document.createElement("div");
-    html.innerHTML = '<div class=\"valign-wrapper\"' + 'id=' + id + '><div class=\"row\"><div class=\"col s12 m12\"><div class=\"card ' + color + '\"><div class=\"card-content white-text\"><span class=\"card-title">' + title + '</span><p>' + text + '</p></div><div class=\"card-action right-align\"><a href=\"#\">复制</a></div></div></div></div></div>'
+    html.innerHTML = '<div class=\"valign-wrapper\"><div class=\"row\"><div class=\"col s12 m12\"><div class=\"card ' + color + '\"><div class=\"card-content white-text\"><span class=\"card-title">' + title + '</span><p' + 'id=' + id + '>' + text + '</p></div><div class=\"card-action right-align\"><a href=\"#\">复制</a></div></div></div></div></div>'
     document.body.appendChild(html);
 }
+
+/**
+ * 获取块的文字
+ */
+function getText(id) {
+    var text = document.getElementById(id).innerText;
+    var aux = document.createElement("input");
+    aux.setAttribute("value", text);
+    document.body.appendChild(aux);
+    aux.select();
+    document.execCommand("copy");
+    document.body.removeChild(aux);
+}
+//GCSC03{"username":"hanbings","context":"Hello World 1"}EE
