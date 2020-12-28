@@ -2,6 +2,8 @@ var websocket = null;
 var server = null;
 var username = null;
 var id = 0;
+var copyTemp = null;
+const { clipboard } = require('electron')
 
 function setSomething() {
     server = document.getElementById("server").value;
@@ -40,6 +42,10 @@ function getContext() {
             websocket.onmessage = e => {
                 if (e.data == "GCSS01{\"context\":\"LOGIN SUCCESSFUL\"}EE") {
                     websocket.send("GCSC03{\"username\":" + username + ",\"context\":\"Hello World\"}EE");
+                    // 启动定时任务
+                    var i;
+                    var int = self.setTimeout(i = self.setInterval(getClipboardTimer, 1500), 1500);
+
                 } else {
                     websocketTextExecuter(e.data);
                 }
@@ -75,7 +81,7 @@ function websocketTextExecuter(message) {
  */
 function addCard(id, color, title, text) {
     var html = document.createElement("div");
-    html.innerHTML = '<div class=\"valign-wrapper\"><div class=\"row\"><div class=\"col s12 m12\"><div class=\"card ' + color + '\"><div class=\"card-content white-text\"><span class=\"card-title">' + title + '</span><p' + 'id=' + id + '>' + text + '</p></div><div class=\"card-action right-align\"><a href=\"#\">复制</a></div></div></div></div></div>'
+    html.innerHTML = '<div class=\"valign-wrapper\"><div class=\"row\"><div class=\"col s12 m12\"><div class=\"card ' + color + '\"><div class=\"card-content white-text\"><span class=\"card-title">' + title + '</span><p' + ' id=' + id + '>' + text + '</p></div><div class=\"card-action right-align\"><a' + ' id=' + id + ' onclick="getText(this.id);">复制</a></div></div></div></div></div>'
     document.body.appendChild(html);
 }
 
@@ -92,3 +98,13 @@ function getText(id) {
     document.body.removeChild(aux);
 }
 //GCSC03{"username":"hanbings","context":"Hello World 1"}EE
+
+/**
+ * 定时获取剪切板
+ */
+function getClipboardTimer() {
+    if (clipboard.readText('Text') != copyTemp && copyTemp != '' && clipboard.readText('Text') != '') {
+        copyTemp = clipboard.readText('Text');
+        websocket.send("GCSC02{\"username\":" + username + ",\"context\":\"" + copyTemp + "\"}EE");
+    }
+}
