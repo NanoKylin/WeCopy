@@ -1,0 +1,10 @@
+.container-login{
+    position: relative;
+    max-width: 360px;
+    margin: 30px auto 0;
+    padding: 45px 20px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    box-sizing: border-box;
+}
